@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Countdown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: url('pexels-tdcat-195030.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 4.5em;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .countdown {
+      padding: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 350px; /* Set consistent height for countdowns */
+    }
+    .event-name {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .time {
+      font-size: 2.2em;
+    }
+    .event-image {
+      width: 100%;
+      max-height: 150px; /* Set maximum height for images */
+      object-fit: contain; /* Ensure image scales properly */
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Family Countdown</h1>
+  <div class="grid-container" id="countdowns"></div>
+
+  <script>
+    // List of significant dates with images
+    const events = [
+      { name: "School Closes", date: "2024-12-11T00:00:00", image: "noschool.png" },
+      { name: "Christmas Day", date: "2024-12-25T00:00:00", image: "Christmas-PNG-Images-HD.png" },
+      { name: "Baby Sister is here!", date: "2025-01-21T00:00:00", image: "baby-png-26.png" },
+      { name: "Asher's Birthday", date: "2025-03-18T00:00:00", image: "509-5096013_happy-1st-birthday-png-happy-birthday-party-png.png" }
+    ];
+
+    const countdownContainer = document.getElementById('countdowns');
+
+    function updateCountdowns() {
+      countdownContainer.innerHTML = ''; // Clear existing countdowns
+
+      events.forEach(event => {
+        const eventDate = new Date(event.date);
+        const now = new Date();
+        const timeDifference = eventDate - now;
+
+        const countdownDiv = document.createElement('div');
+        countdownDiv.className = 'countdown';
+
+        const eventImage = `<img src="${event.image}" alt="${event.name}" class="event-image">`;
+        if (timeDifference > 0) {
+          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+          countdownDiv.innerHTML = `
+            ${eventImage}
+            <div class="event-name">${event.name}</div>
+            <div class="time">${days} Days </div>
+          `;
+        } else {
+          countdownDiv.innerHTML = `
+            ${eventImage}
+            <div class="event-name">${event.name}</div>
+            <div class="time">This event has passed!</div>
+          `;
+        }
+
+        countdownContainer.appendChild(countdownDiv);
+      });
+    }
+
+    // Update countdowns every second
+    setInterval(updateCountdowns, 1000);
+  </script>
+</body>
+</html>
+
